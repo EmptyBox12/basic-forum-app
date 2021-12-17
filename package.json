@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/EmptyBox12/basic-forum-app/issues"
   },
-  "homepage": "https://github.com/EmptyBox12/basic-forum-app#readme"
+  "homepage": "https://github.com/EmptyBox12/basic-forum-app#readme",
+  "dependencies": {}
 }

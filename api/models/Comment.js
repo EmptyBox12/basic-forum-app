@@ -5,6 +5,10 @@ const CommentSchema = new Schema({
   content: {
     type: String,
     required: true,
+  },
+  commentor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User" 
   }
 });
 

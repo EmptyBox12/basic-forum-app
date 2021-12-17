@@ -6,6 +6,9 @@ const port = 3001;
 mongoose.connect('mongodb://localhost/forumAPI').then(()=>{
   console.log("mongoose connected")
 });
+//middlewares
+app.use(express.json());
+
 
 app.get("/", (req, res)=> {
   res.send("Home Page");
