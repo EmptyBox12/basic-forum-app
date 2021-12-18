@@ -12,12 +12,21 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  },
   slug: {
     type: String,
     unique: true,
