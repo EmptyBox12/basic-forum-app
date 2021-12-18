@@ -38,6 +38,7 @@ PostSchema.pre("validate", function (next) {
     lower: true,
     strict: true,
   });
+  next();
 });
 
 const Post = mongoose.model("Post", PostSchema);
