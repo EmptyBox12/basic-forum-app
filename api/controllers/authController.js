@@ -43,12 +43,14 @@ exports.loginUser = async (req, res) => {
       } else {
         res.status(400).json({
           status: "fail",
+          msg: "Wrong password"
         });
       }
     });
   } catch (e) {
     res.status(400).json({
       status: "fail",
+      msg:"E-mail doesn't exist"
     });
   }
 };

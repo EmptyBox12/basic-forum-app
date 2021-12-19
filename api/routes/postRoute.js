@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.route("/").get(postController.getAllPosts);
 router.route("/:slug").get(postController.getPost);
+router.route("/:slug").delete(authMiddleware, postController.deletePost)
 router.route("/create").post(authMiddleware, postController.createPost)
 
 

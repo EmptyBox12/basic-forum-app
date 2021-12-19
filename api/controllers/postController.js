@@ -14,7 +14,6 @@ exports.createPost = async (req, res) => {
   try {
     let id = req.user.newUser._id;
     let { title, content } = req.body;
-    console.log(id, title, content);
     const post = await Post.create({
       title: title,
       content: content,
@@ -32,7 +31,29 @@ exports.createPost = async (req, res) => {
   }
 };
 exports.deletePost = async (req, res) => {
-  const post = await Post.deleteOne(req.params.slug);
-  //delete all comments
-  //delete post from user
+  try {
+    const post = await Post.findOne({ slug: req.params.slug });
+    if (!(req.user.newUser._id == post.user)) {
+      res
+        .status(400)
+        .json({ status: "fail", msg: "You can only delete your posts" });
+    }
+    await Comment.deleteMany({ post: post._id });
+    const postUser = await User.findById(post.user);
+    const index = postUser.posts.indexOf(post._id);
+    postUser.posts.splice(index, 1);
+    await postUser.save();
+    await Post.deleteOne({ slug: req.params.slug });
+    res.status(200).json({
+      post: post,
+      status: "success",
+      msg: "Post successfully deleted",
+    });
+  } catch (e) {
+    res.status(400).json({
+      status: "fail",
+      msg: "failed to delete post",
+      e: e,
+    });
+  }
 };

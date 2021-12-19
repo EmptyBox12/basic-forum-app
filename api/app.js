@@ -15,7 +15,7 @@ app.use(express.json());
 
 //routes
 app.use("/user", userRoute);
-app.use("/post", postRoute);
+app.use("/posts", postRoute);
 
 app.listen(port, ()=>{
   console.log("Server is alive at port", port);

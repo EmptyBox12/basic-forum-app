@@ -5,11 +5,17 @@ const CommentSchema = new Schema({
   content: {
     type: String,
     required: true,
-  },  
-  commentor: [{
+  },
+  commentor: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  post: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }],
+    ref: "Post",
+  },
 });
 
 const Comment = mongoose.model("Comment", CommentSchema);
