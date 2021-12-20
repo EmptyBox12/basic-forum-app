@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
+const slugify = require("slugify");
+
 
 const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
+    unique:true,
   },
   email: {
     type: String,
@@ -22,6 +25,17 @@ const UserSchema = new Schema({
       ref: "Post",
     },
   ],
+  slug: {
+    type: String,
+    unique: true,
+  },
+});
+UserSchema.pre("validate", function (next) {
+  this.slug = slugify(this.username, {
+    lower: true,
+    strict: true,
+  });
+  next();
 });
 UserSchema.pre("save", function (next) {
   const user = this;

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Token = require("../models/Token");
-
+//if it gets access token get user, if it gets refreshToken return accessToken
 module.exports = (req, res, next) => {
   const authHeader = req.headers["authorization"];
 

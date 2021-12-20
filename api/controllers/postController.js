@@ -10,6 +10,12 @@ exports.getPost = async (req, res) => {
   const post = await Post.findOne(req.params.slug);
   res.status(200).json(post);
 };
+exports.getUserPosts = async (req, res) => {
+  const slug = req.params.slug;
+  const user = await User.findOne({ slug: slug });
+  const posts = await Post.find({ user: user._id });
+  res.status(200).json({ posts });
+};
 exports.createPost = async (req, res) => {
   try {
     let id = req.user.newUser._id;

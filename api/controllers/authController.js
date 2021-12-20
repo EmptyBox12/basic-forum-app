@@ -9,6 +9,7 @@ exports.createUser = async (req, res) => {
     res.status(201).json({
       email: user.email,
       username: user.username,
+      slug: user.slug
     });
   } catch (e) {
     res.status(400).json({
@@ -61,3 +62,4 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
+
