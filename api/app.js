@@ -4,7 +4,7 @@ require("dotenv").config();
 const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
 const commentRoute = require("./routes/commentRoute");
-
+const tokenRoute = require("./routes/tokenRoute");
 
 const app = express();
 const port = 3001;
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use("/user", userRoute);
 app.use("/posts", postRoute);
 app.use("/comments", commentRoute);
+app.use("/token", tokenRoute)
 
 
 app.listen(port, ()=>{
