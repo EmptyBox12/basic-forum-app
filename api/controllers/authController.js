@@ -62,4 +62,7 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
-
+exports.logoutUser = async (req, res) => {
+  const userID = req.user.newUser._id;
+  await Token.deleteOne({user: userID});
+}
