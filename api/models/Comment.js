@@ -6,13 +6,11 @@ const CommentSchema = new Schema({
     type: String,
     required: true,
   },
-  commentor: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-  ],
+  commentor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
@@ -20,7 +18,7 @@ const CommentSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
 });
 

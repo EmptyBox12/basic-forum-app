@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Token = require("../models/Token");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -27,7 +28,7 @@ exports.loginUser = async (req, res) => {
       });
     }
     const user = await User.findOne({ email: email });
-    bcrypt.compare(password, user.password, function (err, result) {
+    bcrypt.compare(password, user.password, async function (err, result) {
       if (result) {
         let newUser = {
           _id: user._id,
@@ -37,20 +38,26 @@ exports.loginUser = async (req, res) => {
         };
         const accessToken = jwt.sign(
           { newUser },
-          process.env.ACCESS_TOKEN_SECRET
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: "15m" }
         );
-        res.json({ accessToken });
+        const refreshToken = jwt.sign(
+          { newUser },
+          process.env.REFRESH_TOKEN_SECRET
+        );
+        res.json({ accessToken, refreshToken, newUser });
+        await Token.create({ user: user._id, token: refreshToken });
       } else {
         res.status(400).json({
           status: "fail",
-          msg: "Wrong password"
+          msg: "Wrong password",
         });
       }
     });
   } catch (e) {
     res.status(400).json({
       status: "fail",
-      msg:"E-mail doesn't exist"
+      msg: "E-mail doesn't exist",
     });
   }
 };
