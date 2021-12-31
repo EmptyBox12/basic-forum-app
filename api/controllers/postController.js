@@ -3,8 +3,8 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 
 exports.getAllPosts = async (req, res) => {
-  const posts = await Post.find();
-  res.status(200).json(posts);
+  const posts = await Post.find().populate("user", "username slug");
+  res.status(200).json(posts);1
 };
 exports.getPost = async (req, res) => {
   const post = await Post.findOne(req.params.slug);

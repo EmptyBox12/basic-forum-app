@@ -6,7 +6,6 @@ exports.refreshToken = async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const verifyToken = await Token.findOne({ token: token });
-    console.log(verifyToken);
     jwt.verify(
       verifyToken.token,
       process.env.REFRESH_TOKEN_SECRET,
@@ -16,7 +15,6 @@ exports.refreshToken = async (req, res) => {
             .status(401)
             .json({ status: "fail", msg: "You don't have access" });
         } else {
-          console.log(user);
           const newUser = user.newUser;
           const accessToken = jwt.sign(
             { newUser },

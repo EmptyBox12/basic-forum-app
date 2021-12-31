@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+} from "react-router-dom";
+import axios from "axios";
+import Main from "./components/Main";
+import Navbar from "./components/Navbar";
+import Post from "./components/Post";
+import Profile from "./components/Profile";
+
+import "./App.css";
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
+  async function getPosts() {
+    try {
+      const posts = await axios.get("http://localhost:3001/posts/");
+      setPosts(posts.data)
+    } catch (err) {
+      console.log(err.response);
+    }
+  }
+  useEffect(() => {
+    (async () => {
+      try {
+        await getPosts();
+      } catch (err) {
+        console.log(err.response);
+      }
+    })();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Main posts={posts} />} />
+          <Route path="/:slug" element={<Post />} />
+          <Route path="/users/:slug" element={<Profile />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

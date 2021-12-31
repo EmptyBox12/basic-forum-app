@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
 require("dotenv").config();
 const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
@@ -14,6 +15,9 @@ mongoose.connect('mongodb://localhost/forumAPI').then(()=>{
 });
 //middlewares
 app.use(express.json());
+app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+
 
 //routes
 app.use("/user", userRoute);
