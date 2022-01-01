@@ -3,8 +3,8 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 
 exports.getAllPosts = async (req, res) => {
-  const posts = await Post.find().populate("user", "username slug");
-  res.status(200).json(posts);1
+  const posts = await Post.find().sort("-createdAt").populate("user", "username slug");
+  res.status(200).json(posts);
 };
 exports.getPost = async (req, res) => {
   const post = await Post.findOne(req.params.slug);
@@ -13,7 +13,7 @@ exports.getPost = async (req, res) => {
 exports.getUserPosts = async (req, res) => {
   const slug = req.params.slug;
   const user = await User.findOne({ slug: slug });
-  const posts = await Post.find({ user: user._id });
+  const posts = await Post.find({ user: user._id }).populate("user");
   res.status(200).json({ posts });
 };
 exports.createPost = async (req, res) => {

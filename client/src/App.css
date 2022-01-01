@@ -24,6 +24,7 @@
   gap: 10px;
   font-size: 30px;
   font-weight: 600;
+  cursor: pointer;
 }
 .loginButtons{
   margin-right: 30px;
@@ -44,7 +45,7 @@
   filter: brightness(0.9);
 }
 .loginButtons button:active{
-  filter: brightness(0.8);
+  filter: brightness(0.7);
 }
 .main{
   min-height:88vh;
@@ -61,6 +62,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   height: 110px;
+  cursor: pointer;
 }
 .postCardContainer:hover{
   border: rgba(233, 231, 231, 0.933) solid 1px; ;
@@ -85,7 +87,20 @@
   font-size: 17px;
   font-weight: 400;
 }
+.postCardAuthor:hover{
+  text-decoration: underline;
+}
 .postCardComments{
   color: #a4a6a8;
 }
-
+.profileContainer{
+  background-color: #1a1a1a;
+  min-height:88vh;
+  padding: 15px;
+  padding-top: 25px;
+}
+.profileUsername{
+  color: #D7DADC;
+  font-size: 25px;
+  margin-bottom: 17px;
+}
