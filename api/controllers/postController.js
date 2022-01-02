@@ -7,7 +7,13 @@ exports.getAllPosts = async (req, res) => {
   res.status(200).json(posts);
 };
 exports.getPost = async (req, res) => {
-  const post = await Post.findOne(req.params.slug);
+  const post = await Post.findOne({slug: req.params.slug}).populate("user", "username").populate({
+    path: "comments",
+    populate: {
+      path: "commentor",
+      select: "username"
+    }
+  });
   res.status(200).json(post);
 };
 exports.getUserPosts = async (req, res) => {

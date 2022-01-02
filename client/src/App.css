@@ -49,17 +49,19 @@
 }
 .main{
   min-height:88vh;
-  background-color: #1a1a1a;
+  background-color: #030303;
   padding: 15px;
   padding-top: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .postCardContainer{
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: #3e3e3e;
+  background-color: #1a1a1a;
   border: rgba(117, 116, 116, 0.933) solid 1px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-sizing: border-box;
   height: 110px;
   cursor: pointer;
@@ -87,6 +89,9 @@
   font-size: 17px;
   font-weight: 400;
 }
+.postCardAuthor{
+  width: fit-content;
+}
 .postCardAuthor:hover{
   text-decoration: underline;
 }
@@ -94,13 +99,77 @@
   color: #a4a6a8;
 }
 .profileContainer{
-  background-color: #1a1a1a;
+  background-color: #030303;
   min-height:88vh;
   padding: 15px;
   padding-top: 25px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .profileUsername{
   color: #D7DADC;
   font-size: 25px;
   margin-bottom: 17px;
+}
+.postContainer{
+  background-color: #030303;
+  min-height:88vh;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.post{
+  box-sizing: border-box;
+  min-height:80vh;
+  background-color: #1a1a1a;
+  width: 70%;
+  border-radius: 10px;
+  color: rgb(194 197 199);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-left: 100px;
+  padding-right: 70px;
+
+}
+.postTitle{
+  color: rgb(205 208 210);
+  font-size: 35px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.postAuthor{
+  filter: brightness(0.8);
+  margin-bottom: 5px;
+}
+.postContent{
+  margin-top: 10px;
+  font-size: 20px;
+}
+.makeComment{
+  margin-top: 300px;
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  font-size: 20px;
+  gap: 5px;
+}
+.commentArea{
+  background-color: #1a1a1a;
+  color: rgb(194 197 199);
+  font-size: 15px;
+}
+.commentButton{
+  align-self: flex-end;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 3px;
+  width: 100px;
+}
+.commentButton:hover{
+  filter: brightness(0.9);
+}
+.commentButton:active{
+  filter: brightness(0.7);
 }
