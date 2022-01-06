@@ -173,3 +173,26 @@
 .commentButton:active{
   filter: brightness(0.7);
 }
+.commentContainer{
+  margin-top: 40px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.commentTitle{
+  display: flex;
+  gap: 5px;
+  color: rgb(205 208 210);
+  font-size: 14px;
+}
+.commentUsername:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.commentPastTime{
+  filter: brightness(0.7);
+}
+.commentContent{
+  font-size: 20px ;
+}

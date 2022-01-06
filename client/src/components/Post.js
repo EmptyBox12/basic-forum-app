@@ -5,14 +5,13 @@ import CommentCard from "./CommentCard";
 
 export default function Post() {
   const { slug } = useParams();
-  const [comment, setComment] = useState("");
+  const [commentArea, setCommentArea] = useState("");
   const [post, setPost] = useState(null);
 
   useEffect(()=> {
     (async ()=> {
       let postResponse = await axios.get(`http://localhost:3001/posts/${slug}`);
       let post = postResponse.data;
-      console.log(post);
       setPost(post);
     })()
   },[])
@@ -26,11 +25,11 @@ export default function Post() {
         <div className="postContent">{post.content}</div>
         <div className="makeComment">
           Comment:
-          <textarea className="commentArea" onChange={(e)=> {setComment(e.target.value)}} cols="40" rows="8">{comment}</textarea> </div>
+          <textarea className="commentArea" onChange={(e)=> {setCommentArea(e.target.value)}} cols="40" rows="8" value={commentArea}></textarea> </div>
           <button className="commentButton">Comment</button>
           <div className="comments">
             {post.comments.map(comment => {
-              return <CommentCard comment = {comment} />
+              return <CommentCard comment = {comment} key={comment._id} />
             })}
           </div>
       </div> 

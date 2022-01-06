@@ -11,7 +11,7 @@ exports.getPost = async (req, res) => {
     path: "comments",
     populate: {
       path: "commentor",
-      select: "username"
+      select: "username slug"
     }
   });
   res.status(200).json(post);
@@ -19,7 +19,7 @@ exports.getPost = async (req, res) => {
 exports.getUserPosts = async (req, res) => {
   const slug = req.params.slug;
   const user = await User.findOne({ slug: slug });
-  const posts = await Post.find({ user: user._id }).populate("user");
+  const posts = await Post.find({ user: user._id }).populate("user", "username slug");
   res.status(200).json({ posts });
 };
 exports.createPost = async (req, res) => {
