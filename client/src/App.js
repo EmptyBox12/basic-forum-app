@@ -15,14 +15,11 @@ import Login from "./components/Login";
 
 import "./App.css";
 
-axios.interceptors.response.use(null, error=>{
-  
-});
-
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [posts, setPosts] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  //need useEffect to check login
 
   async function getPosts() {
     try {
@@ -46,12 +43,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar loggedIn = {loggedIn} />
+        <Navbar loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} />
         <Routes>
           <Route path="/" element={<Main posts={posts} />} />
           <Route path="/:slug" element={<Post />} />
           <Route path="/users/:slug" element={<Profile />} />
-          <Route path="/login" element={<Login setLoggedIn = {setLoggedIn} />} />
+          <Route path="/login" element={<Login setLoggedIn = {setLoggedIn} loggedIn = {loggedIn} />} />
         </Routes>
       </Router>
     </div>

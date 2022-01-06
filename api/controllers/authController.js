@@ -9,7 +9,7 @@ exports.createUser = async (req, res) => {
     res.status(201).json({
       email: user.email,
       username: user.username,
-      slug: user.slug
+      slug: user.slug,
     });
   } catch (e) {
     res.status(400).json({
@@ -23,12 +23,18 @@ exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email) {
-      res.status(400).json({
+      return res.status(400).json({
         status: "fail",
         msg: "Please enter an email!",
       });
     }
     const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(400).json({
+        status: "fail",
+        msg: "email not found",
+      });
+    }
     bcrypt.compare(password, user.password, async function (err, result) {
       if (result) {
         let newUser = {
@@ -36,6 +42,7 @@ exports.loginUser = async (req, res) => {
           username: user.username,
           email: user.email,
           posts: user.posts,
+          slug: user.slug,
         };
         const accessToken = jwt.sign(
           { newUser },
@@ -46,23 +53,31 @@ exports.loginUser = async (req, res) => {
           { newUser },
           process.env.REFRESH_TOKEN_SECRET
         );
-        res.json({ accessToken, refreshToken, newUser });
         await Token.create({ user: user._id, token: refreshToken });
+        return res.status(200).json({ accessToken, refreshToken, newUser });
       } else {
-        res.status(400).json({
+        return res.status(400).json({
           status: "fail",
           msg: "Wrong password",
         });
       }
     });
   } catch (e) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "fail",
       msg: "E-mail doesn't exist",
     });
   }
 };
 exports.logoutUser = async (req, res) => {
-  const userID = req.user.newUser._id;
-  await Token.deleteOne({user: userID});
-}
+  try {
+    const userID = req.user.newUser._id;
+    let deleted = await Token.deleteOne({ user: userID });
+    res.status(201).json({
+      status:"success",
+      msg:"logged out"
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

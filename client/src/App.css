@@ -131,7 +131,6 @@
   padding: 20px;
   padding-left: 100px;
   padding-right: 70px;
-
 }
 .postTitle{
   color: rgb(205 208 210);
@@ -195,4 +194,73 @@
 }
 .commentContent{
   font-size: 20px ;
+}
+.loginFormContainer{
+  background-color: #030303;
+  min-height:88vh;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+  align-items: center;
+}
+.loginForm{
+  background-color: #1a1a1a;
+  border-radius: 30px;
+  color: rgb(205 208 210);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  height: 70vh;
+  width: 30vw;
+  font-size: 23px;
+  gap: 20px;
+}
+.loginForm input{
+  width: 300px;
+  font-size: 19px;
+  height: 27px;
+  padding: 5px;
+  padding-left: 7px;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+.loginEmail{
+  margin-top: 30px;
+}
+.loginPassword, .loginEmail{
+  display: flex;
+  flex-direction: column;
+}
+.loginForm button{
+  width: 70px;
+  align-self: flex-end;
+  margin-right: 75px;
+  font-size: 25px;
+  color: #D7DADC;
+  background-color: transparent;
+  border: 1px solid #1a1a1a;
+  font-weight: 700;
+  width: 100px;
+  height: 40px;
+  padding:21px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  transition: border 400ms ease-in-out;
+}
+.loginForm button:hover{
+  border: 1px solid #a4a7a8;
+  transition: border 400ms ease-in-out;
+}
+.loginForm button:active{
+  filter: brightness(0.7);
+}
+.error{
+  color: tomato;
+  font-size: 17px;
+  margin-left: 4px;
+  margin-top: 1px;
 }
