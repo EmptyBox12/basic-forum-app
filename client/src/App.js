@@ -34,7 +34,6 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        console.log(cookies.accessToken);
         let response = await axios.get("http://localhost:3001/user/getUser", {
           headers: {
             authorization: `Bearer ${cookies.accessToken}`,
@@ -43,6 +42,11 @@ function App() {
         setCookie("user", response.data.user, { path: '/' });
         setLoggedIn(true);
       } catch (error) {
+        //need to move these to axios interceptor
+        removeCookie("user");
+        removeCookie("accessToken");
+        removeCookie("refreshToken");
+        setIconColor("white");
         console.log(error.response);
       }
     })();

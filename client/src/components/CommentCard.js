@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import formatDistance from "date-fns/formatDistance";
 
 export default function CommentCard({ comment }) {
-  console.log(comment);
   const navigate = useNavigate();
   const { commentor, content, createdAt } = comment;
   const pastTime = formatDistance(new Date(createdAt), new Date(), {

@@ -18,7 +18,7 @@ export default function Register({ loggedIn, setIconColor }) {
       email: "",
       username: "",
       password: "",
-      color: "",
+      color: "#ffffff",
     },
     onSubmit: async (values) => {
       try {
@@ -35,7 +35,7 @@ export default function Register({ loggedIn, setIconColor }) {
         setIconColor("white");
         navigate("/login");
       } catch (error) {
-        alert(error.response.data.msg);
+        console.log(error.response.data);
       }
     },
     validationSchema: Yup.object().shape({
@@ -103,6 +103,7 @@ export default function Register({ loggedIn, setIconColor }) {
             value={formik.values.color}
             onChange={(e)=> {
               formik.handleChange(e);
+              console.log(e.target.value);
               setIconColor(e.target.value);
             }}
             onBlur={formik.handleBlur}

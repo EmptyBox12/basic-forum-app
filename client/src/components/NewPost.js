@@ -36,7 +36,7 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
           }
         );
         let newPosts = [...posts];
-        newPosts.push(response.data);
+        newPosts.unshift(response.data);
         setPosts(newPosts);
         navigate(`/${response.data.slug}`)
       } catch (error) {
