@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export default function Register({ loggedIn }) {
+export default function Register({ loggedIn, setIconColor }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,18 +18,21 @@ export default function Register({ loggedIn }) {
       email: "",
       username: "",
       password: "",
+      color: "",
     },
     onSubmit: async (values) => {
       try {
-        const { email, username, password } = values;
+        const { email, username, password, color } = values;
         const loginData = await axios.post(
           "http://localhost:3001/user/register",
           {
             email,
             username,
             password,
+            color
           }
         );
+        setIconColor("white");
         navigate("/login");
       } catch (error) {
         alert(error.response.data.msg);
@@ -88,7 +91,26 @@ export default function Register({ loggedIn }) {
             <div className="error">{formik.errors.password}</div>
           ) : null}
         </div>
-        <button type="submit" style={{"width": "140px", "marginRight":"50px" }}>Register</button>
+        <div
+          className="loginPassword"
+          style={{ width: "300px" }}
+        >
+          <label htmlFor="color">Color</label>
+          <input
+            type="color"
+            name="color"
+            style = {{width:"70px", height:"30px", padding:"0", borderRadius:"5px"}}
+            value={formik.values.color}
+            onChange={(e)=> {
+              formik.handleChange(e);
+              setIconColor(e.target.value);
+            }}
+            onBlur={formik.handleBlur}
+          />
+        </div>
+        <button type="submit" style={{ width: "140px", marginRight: "50px" }}>
+          Register
+        </button>
       </form>
     </div>
   );

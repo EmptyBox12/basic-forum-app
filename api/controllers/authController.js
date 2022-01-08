@@ -10,6 +10,7 @@ exports.createUser = async (req, res) => {
       email: user.email,
       username: user.username,
       slug: user.slug,
+      color: user.color
     });
   } catch (e) {
     res.status(400).json({

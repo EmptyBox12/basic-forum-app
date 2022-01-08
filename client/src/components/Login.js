@@ -27,9 +27,9 @@ export default function Login({ setLoggedIn, loggedIn }) {
           email,
           password,
         });
-        setCookie("accessToken", loginData.data.accessToken);
-        setCookie("user", loginData.data.newUser);
-        setCookie("refreshToken", loginData.data.refreshToken);
+        setCookie("accessToken", loginData.data.accessToken, { path: '/' });
+        setCookie("user", loginData.data.newUser, { path: '/' });
+        setCookie("refreshToken", loginData.data.refreshToken, { path: '/' });
         setLoggedIn(true);
         navigate("/");
       } catch (error) {

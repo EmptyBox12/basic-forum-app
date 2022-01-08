@@ -20,6 +20,8 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [posts, setPosts] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [iconColor, setIconColor] = useState("white");
+  //add confirm password
 
   async function getPosts() {
     try {
@@ -32,12 +34,13 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
+        console.log(cookies.accessToken);
         let response = await axios.get("http://localhost:3001/user/getUser", {
           headers: {
             authorization: `Bearer ${cookies.accessToken}`,
           },
         });
-        setCookie("user", response.data.user);
+        setCookie("user", response.data.user, { path: '/' });
         setLoggedIn(true);
       } catch (error) {
         console.log(error.response);
@@ -58,12 +61,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} iconColor= {iconColor} />
         <Routes>
           <Route path="/" element={<Main posts={posts} />} />
           <Route path="/:slug" element={<Post loggedIn={loggedIn}/>} />
           <Route path="/users/:slug" element={<Profile />} />
-          <Route path="/register" element={<Register loggedIn={loggedIn} />} />
+          <Route path="/register" element={<Register loggedIn={loggedIn} setIconColor = {setIconColor}/>} />
           <Route path="/new-post" element={<NewPost loggedIn={loggedIn} posts = {posts} setPosts = {setPosts} />} />
           <Route
             path="/login"

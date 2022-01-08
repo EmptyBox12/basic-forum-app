@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-export default function Navbar({ loggedIn, setLoggedIn }) {
+export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
   const [cookies, setCookie, removeCookie] = useCookies();
   let navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
   return (
     <div className="navBar">
       <div className="logo" onClick={() => navigate("/")}>
-        <img src="/images/redditLogo.png" alt="logo" />
+        <img src="/images/redditLogo.png" alt="logo" style={{backgroundColor: cookies.user ? cookies.user.color : iconColor}} />
         <span>catit</span>
       </div>
       <div className="loginButtons">

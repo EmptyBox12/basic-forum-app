@@ -3,11 +3,11 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 
 exports.getAllPosts = async (req, res) => {
-  const posts = await Post.find().sort("-createdAt").populate("user", "username slug");
+  const posts = await Post.find().sort("-createdAt").populate("user", "username slug color");
   res.status(200).json(posts);
 };
 exports.getPost = async (req, res) => {
-  const post = await Post.findOne({slug: req.params.slug}).populate("user", "username slug").populate({
+  const post = await Post.findOne({slug: req.params.slug}).populate("user", "username slug color").populate({
     path: "comments",
     populate: {
       path: "commentor",
@@ -19,7 +19,7 @@ exports.getPost = async (req, res) => {
 exports.getUserPosts = async (req, res) => {
   const slug = req.params.slug;
   const user = await User.findOne({ slug: slug });
-  const posts = await Post.find({ user: user._id }).populate("user", "username slug");
+  const posts = await Post.find({ user: user._id }).populate("user", "username slug color");
   res.status(200).json({ posts });
 };
 exports.createPost = async (req, res) => {
@@ -34,7 +34,7 @@ exports.createPost = async (req, res) => {
     const user = await User.findById(id);
     user.posts.push(post._id);
     await user.save();
-    const newPost = await Post.findOne({_id: post._id}).populate("user", "username slug").populate({
+    const newPost = await Post.findOne({_id: post._id}).populate("user", "username slug color").populate({
       path: "comments",
       populate: {
         path: "commentor",
