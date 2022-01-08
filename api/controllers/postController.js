@@ -7,7 +7,7 @@ exports.getAllPosts = async (req, res) => {
   res.status(200).json(posts);
 };
 exports.getPost = async (req, res) => {
-  const post = await Post.findOne({slug: req.params.slug}).populate("user", "username").populate({
+  const post = await Post.findOne({slug: req.params.slug}).populate("user", "username slug").populate({
     path: "comments",
     populate: {
       path: "commentor",
@@ -34,7 +34,14 @@ exports.createPost = async (req, res) => {
     const user = await User.findById(id);
     user.posts.push(post._id);
     await user.save();
-    res.status(201).json(post);
+    const newPost = await Post.findOne({_id: post._id}).populate("user", "username slug").populate({
+      path: "comments",
+      populate: {
+        path: "commentor",
+        select: "username slug"
+      }
+    });
+    res.status(201).json(newPost);
   } catch (error) {
     res.status(400).json({
       msg: "failed to create post",

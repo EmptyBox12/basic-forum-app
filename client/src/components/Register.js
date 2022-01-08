@@ -1,37 +1,36 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 
-export default function Login({ setLoggedIn, loggedIn }) {
-  const [cookies, setCookie, removeCookie] = useCookies();
+export default function Register({ loggedIn }) {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loggedIn) {
       navigate("/");
     }
-  },[]);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
       email: "",
+      username: "",
       password: "",
     },
     onSubmit: async (values) => {
       try {
-        const { email, password } = values;
-        const loginData = await axios.post("http://localhost:3001/user/login", {
-          email,
-          password,
-        });
-        setCookie("accessToken", loginData.data.accessToken);
-        setCookie("user", loginData.data.newUser);
-        setCookie("refreshToken", loginData.data.refreshToken);
-        setLoggedIn(true);
-        navigate("/");
+        const { email, username, password } = values;
+        const loginData = await axios.post(
+          "http://localhost:3001/user/register",
+          {
+            email,
+            username,
+            password,
+          }
+        );
+        navigate("/login");
       } catch (error) {
         alert(error.response.data.msg);
       }
@@ -40,7 +39,10 @@ export default function Login({ setLoggedIn, loggedIn }) {
       email: Yup.string()
         .email("Please enter a valid email")
         .required("Please enter an email"),
-      password: Yup.string().required("You need to enter a password"),
+      username: Yup.string().required("You need to enter a username"),
+      password: Yup.string()
+        .required("You need to enter a password")
+        .min(6, "Password must be longer than 6 characters"),
     }),
   });
 
@@ -61,6 +63,19 @@ export default function Login({ setLoggedIn, loggedIn }) {
           ) : null}
         </div>
         <div className="loginPassword">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.username && formik.errors.username ? (
+            <div className="error">{formik.errors.username}</div>
+          ) : null}
+        </div>
+        <div className="loginPassword">
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -73,7 +88,7 @@ export default function Login({ setLoggedIn, loggedIn }) {
             <div className="error">{formik.errors.password}</div>
           ) : null}
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" style={{"width": "140px", "marginRight":"50px" }}>Register</button>
       </form>
     </div>
   );

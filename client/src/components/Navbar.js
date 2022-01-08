@@ -18,6 +18,9 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
           },
         }
       );
+      removeCookie("user");
+      removeCookie("accessToken");
+      removeCookie("refreshToken");
       setLoggedIn(false);
     } catch (error) {
       console.log(error);
@@ -33,7 +36,13 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
       <div className="loginButtons">
         {loggedIn ? (
           <>
-            <button>New Post</button>
+            <button
+              onClick={() => {
+                navigate(`/new-post`);
+              }}
+            >
+              New Post
+            </button>
             <button
               onClick={() => {
                 navigate(`/users/${cookies.user.slug}`);
@@ -52,7 +61,13 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
             >
               Log In
             </button>
-            <button>Register</button>
+            <button
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              Register
+            </button>
           </>
         )}
       </div>

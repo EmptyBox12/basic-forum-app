@@ -11,7 +11,8 @@ exports.createComment = async (req, res) => {
     });
     post.comments.push(comment._id);
     await post.save();
-    res.status(201).json({ status: "success", comment });
+    const newComment = await Comment.findOne({_id: comment._id}).populate("commentor", "username slug");
+    res.status(201).json({ status: "success", newComment });
   } catch (e) {
     res.status(400).json({ status: "fail", msg: "Can't create comment", e });
   }

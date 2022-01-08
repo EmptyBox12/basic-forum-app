@@ -6,6 +6,7 @@ import Postcard from "./Postcard";
 export default function Profile() {
   const { slug } = useParams();
   const [userPosts, setUserPosts] = useState(null);
+  
 
   useEffect(() => {
     (async () => {

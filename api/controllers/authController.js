@@ -79,5 +79,24 @@ exports.logoutUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.status(400).json({
+      status:"fail",
+      msg:"can't log out"
+    })
   }
 };
+exports.getUser = async (req, res) => {
+  try{
+    const userID = req.user.newUser._id;
+    const user = await User.findOne({_id: userID}).select("-password");
+    res.status(200).json({
+      user: user,
+    })
+  } catch(error){
+    console.log(error);
+    return res.status(400).json({
+      status:"fail",
+      msg:"can't get user"
+    });
+  }
+}
