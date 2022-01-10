@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import cookies from 'js-cookie';
 import CommentCard from "./CommentCard";
 
 export default function Post({ loggedIn }) {
   const { slug } = useParams();
-  const [cookies, setCookie, removeCookie] = useCookies();
   const [commentArea, setCommentArea] = useState("");
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ export default function Post({ loggedIn }) {
         },
         {
           headers: {
-            authorization: `Bearer ${cookies.accessToken}`,
+            authorization: `Bearer ${cookies.get("accessToken")}`,
           },
         }
       );

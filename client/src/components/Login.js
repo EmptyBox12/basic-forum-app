@@ -3,10 +3,9 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import cookies from 'js-cookie'
 
 export default function Login({ setLoggedIn, loggedIn }) {
-  const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,9 +26,10 @@ export default function Login({ setLoggedIn, loggedIn }) {
           email,
           password,
         });
-        setCookie("accessToken", loginData.data.accessToken, { path: '/' });
-        setCookie("user", loginData.data.newUser, { path: '/' });
-        setCookie("refreshToken", loginData.data.refreshToken, { path: '/' });
+        cookies.set("accessToken", loginData.data.accessToken, { path: '/' });
+        let stringUser = JSON.stringify(loginData.data.newUser);
+        cookies.set("user", stringUser, { path: '/' });
+        cookies.set("refreshToken", loginData.data.refreshToken, { path: '/' });
         setLoggedIn(true);
         navigate("/");
       } catch (error) {

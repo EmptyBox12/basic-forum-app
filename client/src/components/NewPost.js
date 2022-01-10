@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import cookies from 'js-cookie'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export default function NewPost({ loggedIn, posts, setPosts }) {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies();
 
   useEffect(() => {
     if (!loggedIn) {
@@ -31,7 +30,7 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
           },
           {
             headers: {
-              authorization: `Bearer ${cookies.accessToken}`,
+              authorization: `Bearer ${cookies.get("accessToken")}`,
             },
           }
         );

@@ -1,10 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import cookies from 'js-cookie'
 import axios from "axios";
 
 export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
-  const [cookies, setCookie, removeCookie] = useCookies();
   let navigate = useNavigate();
 
   async function handleLogout() {
@@ -14,13 +13,13 @@ export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
         {},
         {
           headers: {
-            authorization: `Bearer ${cookies.accessToken}`,
+            authorization: `Bearer ${cookies.get("accessToken")}`,
           },
         }
       );
-      removeCookie("user");
-      removeCookie("accessToken");
-      removeCookie("refreshToken");
+      cookies.remove("user");
+      cookies.remove("accessToken");
+      cookies.remove("refreshToken");
       setLoggedIn(false);
     } catch (error) {
       console.log(error);
@@ -30,7 +29,7 @@ export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
   return (
     <div className="navBar">
       <div className="logo" onClick={() => navigate("/")}>
-        <img src="/images/redditLogo.png" alt="logo" style={{backgroundColor: cookies.user ? cookies.user.color : iconColor}} />
+        <img src="/images/redditLogo.png" alt="logo" style={{backgroundColor: cookies.get("user") ? JSON.parse(cookies.get("user")).color: iconColor}} />
         <span>catit</span>
       </div>
       <div className="loginButtons">
@@ -45,7 +44,7 @@ export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
             </button>
             <button
               onClick={() => {
-                navigate(`/users/${cookies.user.slug}`);
+                navigate(`/users/${JSON.parse(cookies.get("user")).slug}`);
               }}
             >
               Profile
