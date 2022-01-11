@@ -25,7 +25,7 @@ exports.deleteComment = async (req, res) => {
       req.user.newUser._id != comment.commentor ||
       req.user.newUser._id != post.user
     ) {
-      res
+      return res
         .status(400)
         .json({
           status: "fail",

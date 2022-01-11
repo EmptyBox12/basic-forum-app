@@ -40,6 +40,7 @@
   border-radius: 20px;
   font-weight: 700;
   color: orange;
+  cursor: pointer;
 }
 .loginButtons button:hover{
   filter: brightness(0.9);
@@ -268,4 +269,57 @@
   font-size: 17px;
   margin-left: 4px;
   margin-top: 1px;
+}
+.newPost{
+  background-color: #030303;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88vh;
+}
+.newPostContainer{
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 70vh;
+  color: rgb(205 208 210);
+  gap: 20px;
+}
+.newPostInput{
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  font-size: 23px;
+}
+.newPostTitle{
+  height: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 5px;
+}
+.newPostArea{
+  height: 160px;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 5px;
+}
+.newPostContainer button{
+  margin-left: 520px;
+  font-size: 25px;
+  background-color: transparent;
+  color: #D7DADC;
+  border: 1px solid #1a1a1a;
+  transition: border 400ms ease-in-out;
+  border-radius: 30px;
+  padding:7px 20px;
+}
+.newPostContainer button:hover{
+  transition: border 400ms ease-in-out;
+  border: 1px solid #a4a7a8;
+}
+.newPostContainer button:active{
+  filter: brightness(0.7);
 }

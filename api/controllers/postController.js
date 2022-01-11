@@ -53,7 +53,7 @@ exports.deletePost = async (req, res) => {
   try {
     const post = await Post.findOne({ slug: req.params.slug });
     if (!(req.user.newUser._id == post.user)) {
-      res
+      return res
         .status(400)
         .json({ status: "fail", msg: "You can only delete your posts" });
     }

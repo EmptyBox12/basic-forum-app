@@ -50,8 +50,8 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
 
   return (
     <div className="newPost">
-      <form onSubmit={formik.handleSubmit}>
-        <div>
+      <form onSubmit={formik.handleSubmit} className="newPostContainer" >
+        <div className="newPostInput">
           <span>Title</span>
           <input
             type="text"
@@ -65,7 +65,7 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
             <div className="error">{formik.errors.title}</div>
           ) : null}
         </div>
-        <div>
+        <div className="newPostInput">
           <span>Content</span>
           <textarea
             className="newPostArea"
@@ -80,7 +80,7 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
             <div className="error">{formik.errors.content}</div>
           ) : null}
         </div>
-        <button type="submit">New Post</button>
+        <button type="submit">Post</button>
       </form>
     </div>
   );
