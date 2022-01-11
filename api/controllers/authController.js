@@ -44,6 +44,7 @@ exports.loginUser = async (req, res) => {
           email: user.email,
           posts: user.posts,
           slug: user.slug,
+          color: user.color
         };
         const accessToken = jwt.sign(
           { newUser },

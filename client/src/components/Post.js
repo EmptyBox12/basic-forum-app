@@ -33,7 +33,7 @@ export default function Post({ loggedIn }) {
       );
       let comment = response.data.newComment;
       let newPost = {...post};
-      newPost.comments.push(comment);
+      newPost.comments.unshift(comment);
       setPost(newPost);
       setCommentArea("");
     } catch (error) {

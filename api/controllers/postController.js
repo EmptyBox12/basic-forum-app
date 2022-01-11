@@ -9,6 +9,7 @@ exports.getAllPosts = async (req, res) => {
 exports.getPost = async (req, res) => {
   const post = await Post.findOne({slug: req.params.slug}).populate("user", "username slug color").populate({
     path: "comments",
+    options: { sort: { 'createdAt': -1 } },
     populate: {
       path: "commentor",
       select: "username slug"

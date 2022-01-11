@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import cookies from 'js-cookie'
 
-export default function Login({ setLoggedIn, loggedIn }) {
+export default function Login({ setLoggedIn, loggedIn, setIconColor }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export default function Login({ setLoggedIn, loggedIn }) {
         let stringUser = JSON.stringify(loginData.data.newUser);
         cookies.set("user", stringUser, { path: '/' });
         cookies.set("refreshToken", loginData.data.refreshToken, { path: '/' });
+        setIconColor(loginData.data.newUser.color);
         setLoggedIn(true);
         navigate("/");
       } catch (error) {

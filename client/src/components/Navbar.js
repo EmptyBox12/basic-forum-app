@@ -37,7 +37,7 @@ export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
           <>
             <button
               onClick={() => {
-                navigate(`/new-post`);
+                navigate(`/create/post`);
               }}
             >
               New Post
