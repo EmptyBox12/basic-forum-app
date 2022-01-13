@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import cookies from 'js-cookie';
+import cookies from "js-cookie";
+import formatDistance from "date-fns/formatDistance";
 import CommentCard from "./CommentCard";
 
 export default function Post({ loggedIn }) {
   const { slug } = useParams();
   const [commentArea, setCommentArea] = useState("");
+  const [postOwner, setPostOwner] = useState(false);
+  const [user, setUser] = useState(null);
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
 
@@ -17,6 +20,26 @@ export default function Post({ loggedIn }) {
       setPost(post);
     })();
   }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      setUser(JSON.parse(cookies.get("user")));
+    } else {
+      setUser(null);
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (post && user) {
+      if (post.user._id == user._id) {
+        setPostOwner(true);
+      } else {
+        setPostOwner(false);
+      }
+    } else {
+      setPostOwner(false);
+    }
+  }, [post, user]);
 
   async function makeComment() {
     try {
@@ -32,7 +55,7 @@ export default function Post({ loggedIn }) {
         }
       );
       let comment = response.data.newComment;
-      let newPost = {...post};
+      let newPost = { ...post };
       newPost.comments.unshift(comment);
       setPost(newPost);
       setCommentArea("");
@@ -45,6 +68,11 @@ export default function Post({ loggedIn }) {
     <div className="postContainer">
       {post ? (
         <div className="post">
+          <div className="postDetailPastTime">
+            {formatDistance(new Date(post.createdAt), new Date(), {
+              addSuffix: true,
+            })}
+          </div>
           <div className="postTitle">{post.title}</div>
           <div
             className="postAuthor"
@@ -56,6 +84,7 @@ export default function Post({ loggedIn }) {
           </div>
           <div className="postContent">{post.content}</div>
           <div className="makeComment">
+            {postOwner && <button className="deletePost">Delete Post</button>}
             Comment:
             <textarea
               className="commentArea"
@@ -67,7 +96,11 @@ export default function Post({ loggedIn }) {
               value={commentArea}
             ></textarea>{" "}
           </div>
-          <button className="commentButton" onClick={makeComment} disabled={loggedIn ? false : true}>
+          <button
+            className="commentButton"
+            onClick={makeComment}
+            disabled={loggedIn ? false : true}
+          >
             Comment
           </button>
           <div className="comments">

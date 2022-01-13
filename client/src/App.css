@@ -85,6 +85,15 @@
   color: #D7DADC;
   padding: 13px;
   justify-content: space-between;
+  position: relative;
+}
+.postPastTime{
+  align-self: flex-end;
+  font-weight: normal;
+  font-size: 15px;
+  position: absolute;
+  top: 0;
+  filter: brightness(0.8);
 }
 .postCardAuthor, .postCardComments{
   font-size: 17px;
@@ -132,6 +141,14 @@
   padding: 20px;
   padding-left: 100px;
   padding-right: 70px;
+  position: relative;
+}
+.postDetailPastTime{
+  align-self: flex-end;
+  position: absolute;
+  filter: brightness(0.7);
+  right: 40px;
+  font-size: 15px;
 }
 .postTitle{
   color: rgb(205 208 210);
@@ -160,6 +177,21 @@
   font-size: 20px;
   gap: 5px;
 }
+.deletePost{
+  align-self: flex-end;
+  background-color: tomato;
+  padding: 3px 10px;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.deletePost:hover{
+  background-color: rgb(204, 78, 56);
+}
+.deletePost:active{
+  background-color: rgb(175, 65, 45);
+}
+
 .commentArea{
   background-color: #1a1a1a;
   color: rgb(194 197 199);
