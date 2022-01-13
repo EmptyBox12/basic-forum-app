@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import cookies from 'js-cookie'
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
   let navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
       cookies.remove("accessToken");
       cookies.remove("refreshToken");
       setLoggedIn(false);
+      toast.dark("Logged-out Successfully")
     } catch (error) {
       console.log(error);
     }

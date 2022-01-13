@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 export default function Register({ loggedIn, setIconColor }) {
   const navigate = useNavigate();
@@ -34,7 +35,9 @@ export default function Register({ loggedIn, setIconColor }) {
         );
         setIconColor("white");
         navigate("/login");
+        toast.dark("Registered Successfully");
       } catch (error) {
+        toast.dark(error.response.data.msg);
         console.log(error.response.data);
       }
     },

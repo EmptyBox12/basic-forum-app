@@ -4,7 +4,7 @@ import cookies from "js-cookie";
 import axios from "axios";
 import formatDistance from "date-fns/formatDistance";
 
-export default function CommentCard({ comment, loggedIn }) {
+export default function CommentCard({ comment, loggedIn, handleDelete }) {
   const [commentOwner, setCommentOwner] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -31,26 +31,10 @@ export default function CommentCard({ comment, loggedIn }) {
       setCommentOwner(false);
     }
   }, [comment, user]);
-  async function handleDelete() {
-    try {
-      let deleteResponse = await axios.delete(
-        `http://localhost:3001/comments/${comment._id}`,
-        {
-          headers: {
-            authorization: `Bearer ${cookies.get("accessToken")}`,
-          },
-        }
-      );
-      console.log(deleteResponse.data);
-      navigate(0);
-    } catch (error) {
-      console.log(error.response);
-    }
-    
-  }
+
   return (
     <div className="commentContainer">
-    {commentOwner && <button className="deleteComment" onClick={handleDelete}>Delete</button>}
+    {commentOwner && <button className="deleteComment" onClick={()=>{handleDelete(comment._id)}}>Delete</button>}
       <div className="commentTitle">
         <span
           className="commentUsername"

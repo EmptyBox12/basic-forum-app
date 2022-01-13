@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import cookies from 'js-cookie'
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 export default function NewPost({ loggedIn, posts, setPosts }) {
   const navigate = useNavigate();
@@ -37,9 +38,10 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
         let newPosts = [...posts];
         newPosts.unshift(response.data);
         setPosts(newPosts);
-        navigate(`/${response.data.slug}`)
+        toast.dark("Post created successfully!");
+        navigate(`/${response.data.slug}`);
       } catch (error) {
-        alert(error.response.data.msg);
+        toast.dark("Failed to Create Post");
       }
     },
     validationSchema: Yup.object().shape({

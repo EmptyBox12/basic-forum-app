@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import cookies from "js-cookie";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Main from "./components/Main";
 import Navbar from "./components/Navbar";
 import Post from "./components/Post";
@@ -100,6 +102,7 @@ function App() {
           setLoggedIn={setLoggedIn}
           iconColor={iconColor}
         />
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Main posts={posts} />} />
           <Route path="/:slug" element={<Post loggedIn={loggedIn} />} />

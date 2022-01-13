@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import cookies from "js-cookie";
 import formatDistance from "date-fns/formatDistance";
+import { toast } from "react-toastify";
 import CommentCard from "./CommentCard";
 
 export default function Post({ loggedIn }) {
@@ -41,6 +42,28 @@ export default function Post({ loggedIn }) {
     }
   }, [post, user]);
 
+  async function handleCommentDelete(id) {
+    try {
+      let deleteResponse = await axios.delete(
+        `http://localhost:3001/comments/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${cookies.get("accessToken")}`,
+          },
+        }
+      );
+      let newPost = { ...post };
+      console.log(newPost);
+      let index = post.comments.findIndex(item => item._id === id);
+      newPost.comments.splice(index, 1);
+      setPost(newPost);
+      toast.dark("Comment Deleted Successfully!");
+    } catch (error) {
+      console.log(error.response);
+    }
+    
+  }
+
   async function makeComment() {
     try {
       const response = await axios.post(
@@ -59,7 +82,9 @@ export default function Post({ loggedIn }) {
       newPost.comments.unshift(comment);
       setPost(newPost);
       setCommentArea("");
+      toast.dark("Comment Made Successfully!");
     } catch (error) {
+      toast.dark("Can't Delete Comment")
       console.log(error.response);
     }
   }
@@ -74,6 +99,7 @@ export default function Post({ loggedIn }) {
         }
       );
       navigate("/");
+      toast.dark("Post Deleted Successfully!");
       console.log(deleteResponse.data);
     } catch (error) {
       console.log(error.response);
@@ -121,7 +147,7 @@ export default function Post({ loggedIn }) {
           </button>
           <div className="comments">
             {post.comments.map((comment) => {
-              return <CommentCard comment={comment} key={comment._id} loggedIn = {loggedIn} />;
+              return <CommentCard comment={comment} key={comment._id} loggedIn = {loggedIn} handleDelete={handleCommentDelete}/>;
             })}
           </div>
         </div>

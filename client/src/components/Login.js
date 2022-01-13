@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import cookies from 'js-cookie'
+import { toast } from "react-toastify";
 
 export default function Login({ setLoggedIn, loggedIn, setIconColor }) {
   const navigate = useNavigate();
@@ -33,8 +34,9 @@ export default function Login({ setLoggedIn, loggedIn, setIconColor }) {
         setIconColor(loginData.data.newUser.color);
         setLoggedIn(true);
         navigate("/");
+        toast.dark("Logged-in Successfully");
       } catch (error) {
-        alert(error.response.data.msg);
+        toast.dark(error.response.data.msg);
       }
     },
     validationSchema: Yup.object().shape({
