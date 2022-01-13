@@ -11,7 +11,10 @@ exports.createComment = async (req, res) => {
     });
     post.comments.push(comment._id);
     await post.save();
-    const newComment = await Comment.findOne({_id: comment._id}).populate("commentor", "username slug");
+    const newComment = await Comment.findOne({ _id: comment._id }).populate(
+      "commentor",
+      "username slug"
+    );
     res.status(201).json({ status: "success", newComment });
   } catch (e) {
     res.status(400).json({ status: "fail", msg: "Can't create comment", e });
@@ -21,17 +24,12 @@ exports.deleteComment = async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.id);
     const post = await Post.findById(comment.post);
-    if (
-      req.user.newUser._id != comment.commentor ||
-      req.user.newUser._id != post.user
-    ) {
-      return res
-        .status(400)
-        .json({
-          status: "fail",
-          msg: "You don't have permission to delete this comment",
-          e,
-        });
+    if (req.user.newUser._id != comment.commentor) {
+      return res.status(400).json({
+        status: "fail",
+        msg: "You don't have permission to delete this comment",
+        e,
+      });
     }
     const index = post.comments.indexOf(comment._id);
     post.comments.splice(index, 1);

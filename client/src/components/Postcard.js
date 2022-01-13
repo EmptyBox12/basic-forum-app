@@ -7,7 +7,6 @@ export default function Postcard({ post }) {
   const pastTime = formatDistance(new Date(createdAt), new Date(), {
     addSuffix: true,
   });
-  console.log(pastTime);
   const navigate = useNavigate();
   function linkToAuthor(e) {
     navigate(`/users/${user.slug}`);

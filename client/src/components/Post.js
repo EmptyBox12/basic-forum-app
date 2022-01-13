@@ -63,6 +63,22 @@ export default function Post({ loggedIn }) {
       console.log(error.response);
     }
   }
+  async function handleDelete() {
+    try {
+      let deleteResponse = await axios.delete(
+        `http://localhost:3001/posts/${slug}`,
+        {
+          headers: {
+            authorization: `Bearer ${cookies.get("accessToken")}`,
+          },
+        }
+      );
+      navigate("/");
+      console.log(deleteResponse.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
 
   return (
     <div className="postContainer">
@@ -84,7 +100,7 @@ export default function Post({ loggedIn }) {
           </div>
           <div className="postContent">{post.content}</div>
           <div className="makeComment">
-            {postOwner && <button className="deletePost">Delete Post</button>}
+            {postOwner && <button className="deletePost" onClick={handleDelete}>Delete Post</button>}
             Comment:
             <textarea
               className="commentArea"
@@ -105,7 +121,7 @@ export default function Post({ loggedIn }) {
           </button>
           <div className="comments">
             {post.comments.map((comment) => {
-              return <CommentCard comment={comment} key={comment._id} />;
+              return <CommentCard comment={comment} key={comment._id} loggedIn = {loggedIn} />;
             })}
           </div>
         </div>

@@ -216,6 +216,24 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+  position: relative;
+}
+.deleteComment{
+  position: absolute;
+  align-self: flex-end;
+  background-color: tomato;
+  filter: brightness(0.9);
+  padding: 2px 5px;
+  font-weight: 600;
+  border: 1px solid black;
+  border-radius: 5px;
+  top: 5px;
+}
+.deleteComment:hover{
+  background-color: rgb(204, 78, 56);
+}
+.deleteComment:active{
+  background-color: rgb(175, 65, 45);
 }
 .commentTitle{
   display: flex;
