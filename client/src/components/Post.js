@@ -6,7 +6,7 @@ import formatDistance from "date-fns/formatDistance";
 import { toast } from "react-toastify";
 import CommentCard from "./CommentCard";
 
-export default function Post({ loggedIn }) {
+export default function Post({ loggedIn, setDeletePost }) {
   const { slug } = useParams();
   const [commentArea, setCommentArea] = useState("");
   const [postOwner, setPostOwner] = useState(false);
@@ -98,10 +98,17 @@ export default function Post({ loggedIn }) {
           },
         }
       );
+      setDeletePost((prev) => {
+        let newPosts = [...prev];
+        let index = newPosts.findIndex(item => item.slug == slug);
+        newPosts.splice(index, 1);
+        return newPosts;
+      });
       navigate("/");
       toast.dark("Post Deleted Successfully!");
       console.log(deleteResponse.data);
     } catch (error) {
+      console.log(error);
       console.log(error.response);
     }
   }

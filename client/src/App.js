@@ -86,7 +86,7 @@ function App() {
         <ToastContainer  autoClose={2000}/>
         <Routes>
           <Route path="/" element={<Main posts = {posts} setPosts= {setPosts}/>} />
-          <Route path="/:slug" element={<Post loggedIn={loggedIn} />} />
+          <Route path="/:slug" element={<Post loggedIn={loggedIn} setDeletePost = {setPosts}/>} />
           <Route path="/users/:slug" element={<Profile />} />
           <Route
             path="/register"
