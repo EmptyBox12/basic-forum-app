@@ -25,9 +25,11 @@ exports.getPost = async (req, res) => {
 };
 exports.getUserPosts = async (req, res) => {
   const slug = req.params.slug;
+  const page = req.query.page || 1;
   const user = await User.findOne({ slug: slug });
-  const posts = await Post.find({ user: user._id }).populate("user", "username slug color");
-  res.status(200).json({ posts });
+  const totalPosts = await Post.find({ user: user._id }).countDocuments();
+  const posts = await Post.find({ user: user._id }).sort("-createdAt").skip((page-1)*10).limit(10).populate("user", "username slug color");
+  res.status(200).json({ posts, totalPosts });
 };
 exports.createPost = async (req, res) => {
   try {

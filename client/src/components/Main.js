@@ -6,7 +6,7 @@ import Postcard from "./Postcard";
 export default function Main({ posts, setPosts }) {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-  const [hasMore, setHasMore] = useState();
+  const [hasMore, setHasMore] = useState(false);
 
   async function getPosts() {
     try {
@@ -36,9 +36,9 @@ export default function Main({ posts, setPosts }) {
       } else {
         try {
           const postsData = await axios.get(`http://localhost:3001/posts/`);
-          setTotalPage(postsData.data.totalPosts);
-          setPosts(postsData.data.posts);
-          setPage(2);
+          setTotalPage(Math.ceil(postsData.data.totalPosts / 10));
+          let currentPage = Math.ceil(posts.length/ 10)
+          setPage(currentPage+1);
         } catch (err) {
           console.log(err);
         }
@@ -47,7 +47,7 @@ export default function Main({ posts, setPosts }) {
   }, []);
 
   useEffect(() => {
-    if (page == totalPage) {
+    if (page >= totalPage) {
       setHasMore(false);
     } else {
       setHasMore(true);
@@ -56,13 +56,13 @@ export default function Main({ posts, setPosts }) {
   return (
     <div className="main">
       <InfiniteScroll
-        dataLength={posts.length} //This is important field to render the next data
+        dataLength={posts.length} 
         next={getPosts}
         hasMore={hasMore}
         loader={<h4 style={{ color: "white" }}>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center", color: "white" }}>
-            <b>Yay! You have seen it all</b>
+            <b>You have seen all posts! Refresh Page for new Posts!</b>
           </p>
         }
       >
