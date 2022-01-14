@@ -33,6 +33,15 @@ export default function Main({ posts, setPosts }) {
         } catch (err) {
           console.log(err.response);
         }
+      } else {
+        try {
+          const postsData = await axios.get(`http://localhost:3001/posts/`);
+          setTotalPage(postsData.data.totalPosts);
+          setPosts(postsData.data.posts);
+          setPage(2);
+        } catch (err) {
+          console.log(err);
+        }
       }
     })();
   }, []);
@@ -50,9 +59,9 @@ export default function Main({ posts, setPosts }) {
         dataLength={posts.length} //This is important field to render the next data
         next={getPosts}
         hasMore={hasMore}
-        loader={<h4 style={{color:"white"}}>Loading...</h4>}
+        loader={<h4 style={{ color: "white" }}>Loading...</h4>}
         endMessage={
-          <p style={{ textAlign: "center", color:"white" }}>
+          <p style={{ textAlign: "center", color: "white" }}>
             <b>Yay! You have seen it all</b>
           </p>
         }
