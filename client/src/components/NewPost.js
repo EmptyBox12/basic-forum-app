@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import cookies from 'js-cookie'
+import cookies from "js-cookie";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 
-export default function NewPost({ loggedIn, posts, setPosts }) {
+export default function NewPost({ loggedIn, setPosts }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,9 +35,7 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
             },
           }
         );
-        let newPosts = [...posts];
-        newPosts.unshift(response.data);
-        setPosts(newPosts);
+        setPosts((posts) => [response.data, ...posts]);
         toast.dark("Post created successfully!");
         navigate(`/${response.data.slug}`);
       } catch (error) {
@@ -52,7 +50,7 @@ export default function NewPost({ loggedIn, posts, setPosts }) {
 
   return (
     <div className="newPost">
-      <form onSubmit={formik.handleSubmit} className="newPostContainer" >
+      <form onSubmit={formik.handleSubmit} className="newPostContainer">
         <div className="newPostInput">
           <span>Title</span>
           <input

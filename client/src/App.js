@@ -52,16 +52,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [iconColor, setIconColor] = useState("white");
   //add confirm password
-
-  async function getPosts() {
-    try {
-      const postsData = await axios.get("http://localhost:3001/posts/");
-      console.log(postsData.data);
-      setPosts(postsData.data);
-    } catch (err) {
-      console.log(err.response);
-    }
-  }
+  
   useEffect(() => {
     (async () => {
       try {
@@ -84,16 +75,6 @@ function App() {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await getPosts();
-      } catch (err) {
-        console.log(err.response);
-      }
-    })();
-  }, []);
-
   return (
     <div className="App">
       <Router>
@@ -102,9 +83,9 @@ function App() {
           setLoggedIn={setLoggedIn}
           iconColor={iconColor}
         />
-        <ToastContainer />
+        <ToastContainer  autoClose={2000}/>
         <Routes>
-          <Route path="/" element={<Main posts={posts} />} />
+          <Route path="/" element={<Main posts = {posts} setPosts= {setPosts}/>} />
           <Route path="/:slug" element={<Post loggedIn={loggedIn} />} />
           <Route path="/users/:slug" element={<Profile />} />
           <Route
@@ -116,7 +97,7 @@ function App() {
           <Route
             path="/create/post"
             element={
-              <NewPost loggedIn={loggedIn} posts={posts} setPosts={setPosts} />
+              <NewPost loggedIn={loggedIn} setPosts={setPosts} />
             }
           />
           <Route

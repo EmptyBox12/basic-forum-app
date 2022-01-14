@@ -3,8 +3,14 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 
 exports.getAllPosts = async (req, res) => {
-  const posts = await Post.find().sort("-createdAt").populate("user", "username slug color");
-  res.status(200).json(posts);
+  const page = req.query.page || 1;
+  const totalPosts = await Post.find().countDocuments();
+
+  const posts = await Post.find().sort("-createdAt").skip((page-1)*10).limit(10).populate("user", "username slug color");
+  res.status(200).json({
+    posts,
+    totalPosts
+  });
 };
 exports.getPost = async (req, res) => {
   const post = await Post.findOne({slug: req.params.slug}).populate("user", "username slug color").populate({
