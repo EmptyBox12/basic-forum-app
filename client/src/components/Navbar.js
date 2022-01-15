@@ -9,6 +9,7 @@ export default function Navbar({
   setLoggedIn,
   iconColor,
   setFilter,
+  filter,
 }) {
   let navigate = useNavigate();
   const [filterText, setFilterText] = useState("");
@@ -34,8 +35,13 @@ export default function Navbar({
     }
   }
   function handleFilter(e) {
-    setFilter(filterText);
-    setFilterText("");
+    if (filterText == "") {
+      setFilter(null);
+      setFilterText("");
+    } else {
+      setFilter(filterText);
+      setFilterText("");
+    }
     e.stopPropagation();
   }
 
@@ -44,8 +50,8 @@ export default function Navbar({
       <div
         className="logo"
         onClick={() => {
-          setFilter("");
           navigate("/");
+          setFilter(null);
         }}
       >
         <img
@@ -62,7 +68,7 @@ export default function Navbar({
           <input
             type="text"
             value={filterText}
-            onClick={(e)=> {
+            onClick={(e) => {
               e.stopPropagation();
             }}
             onChange={(e) => {

@@ -2,17 +2,27 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Postcard from "./Postcard";
+import { useNavigate } from "react-router-dom";
 
-export default function Main({ posts, setPosts, filter }) {
+export default function Main({ posts, setPosts, filter, setFilter }) {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const navigate = useNavigate();
 
   async function getPosts() {
     try {
-      const postsData = await axios.get(
-        `http://localhost:3001/posts/?page=${page}&search=${filter}`
-      );
+      let postsData;
+      if (filter == null) {
+        postsData = await axios.get(
+          `http://localhost:3001/posts/?page=${page}&search=`
+        );
+      } else {
+        postsData = await axios.get(
+          `http://localhost:3001/posts/?page=${page}&search=${filter}`
+        );
+      }
+
       console.log(postsData.data.totalPosts);
       if (JSON.stringify(postsData.data.posts) != JSON.stringify(posts)) {
         console.log(postsData.data.posts);
@@ -27,16 +37,19 @@ export default function Main({ posts, setPosts, filter }) {
   }
   useEffect(() => {
     (async () => {
-      console.log(filter);
-      const postsData = await axios.get(
-        `http://localhost:3001/posts/?page=1&search=${filter}`
-      );
-      if (JSON.stringify(postsData.data.posts) != JSON.stringify(posts)) {
-        console.log(postsData.data.posts);
-        let allPosts = new Set([...postsData.data.posts]);
-        setPosts([...allPosts]);
-        setTotalPage(Math.ceil(postsData.data.totalPosts / 10));
-        setPage(2);
+      if (filter && filter != "") {
+        const postsData = await axios.get(
+          `http://localhost:3001/posts/?page=1&search=${filter}`
+        );
+        if (JSON.stringify(postsData.data.posts) != JSON.stringify(posts)) {
+          console.log(postsData.data.posts);
+          let allPosts = new Set([...postsData.data.posts]);
+          setPosts([...allPosts]);
+          setTotalPage(Math.ceil(postsData.data.totalPosts / 10));
+          setPage(2);
+        }
+      } else if (filter === null) {
+        navigate(0);
       }
     })();
   }, [filter]);
@@ -60,7 +73,7 @@ export default function Main({ posts, setPosts, filter }) {
         }
       }
     })();
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     if (page >= totalPage) {

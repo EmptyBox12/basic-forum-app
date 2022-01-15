@@ -82,10 +82,11 @@ function App() {
           setLoggedIn={setLoggedIn}
           iconColor={iconColor}
           setFilter = {setFilter}
+          filter={filter}
         />
         <ToastContainer  autoClose={2000}/>
         <Routes>
-          <Route path="/" element={<Main posts = {posts} setPosts= {setPosts} filter={filter}/>} />
+          <Route path="/" element={<Main posts = {posts} setPosts= {setPosts} filter={filter} setFilter={setFilter}/>} />
           <Route path="/:slug" element={<Post loggedIn={loggedIn} setDeletePost = {setPosts}/>} />
           <Route path="/users/:slug" element={<Profile />} />
           <Route
