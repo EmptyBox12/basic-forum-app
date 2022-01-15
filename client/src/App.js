@@ -51,8 +51,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [iconColor, setIconColor] = useState("white");
-  //add confirm password
-  
+  const [filter, setFilter] = useState("");
   useEffect(() => {
     (async () => {
       try {
@@ -82,10 +81,11 @@ function App() {
           loggedIn={loggedIn}
           setLoggedIn={setLoggedIn}
           iconColor={iconColor}
+          setFilter = {setFilter}
         />
         <ToastContainer  autoClose={2000}/>
         <Routes>
-          <Route path="/" element={<Main posts = {posts} setPosts= {setPosts}/>} />
+          <Route path="/" element={<Main posts = {posts} setPosts= {setPosts} filter={filter}/>} />
           <Route path="/:slug" element={<Post loggedIn={loggedIn} setDeletePost = {setPosts}/>} />
           <Route path="/users/:slug" element={<Profile />} />
           <Route

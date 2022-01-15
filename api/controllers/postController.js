@@ -4,9 +4,11 @@ const Comment = require("../models/Comment");
 
 exports.getAllPosts = async (req, res) => {
   const page = req.query.page || 1;
-  const totalPosts = await Post.find().countDocuments();
+  const search = req.query.search || "";
+  const totalPosts = await Post.find({title: { $regex: '.*' + search + '.*', $options: 'i'}}).countDocuments();
 
-  const posts = await Post.find().sort("-createdAt").skip((page-1)*10).limit(10).populate("user", "username slug color");
+
+  const posts = await Post.find({title: { $regex: '.*' + search + '.*', $options: 'i'}}).sort("-createdAt").skip((page-1)*10).limit(10).populate("user", "username slug color");
   res.status(200).json({
     posts,
     totalPosts

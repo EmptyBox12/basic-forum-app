@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import cookies from 'js-cookie'
+import cookies from "js-cookie";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
+export default function Navbar({
+  loggedIn,
+  setLoggedIn,
+  iconColor,
+  setFilter,
+}) {
   let navigate = useNavigate();
+  const [filterText, setFilterText] = useState("");
 
   async function handleLogout() {
     try {
@@ -22,17 +28,49 @@ export default function Navbar({ loggedIn, setLoggedIn, iconColor }) {
       cookies.remove("accessToken");
       cookies.remove("refreshToken");
       setLoggedIn(false);
-      toast.dark("Logged-out Successfully")
+      toast.dark("Logged-out Successfully");
     } catch (error) {
       console.log(error);
     }
   }
+  function handleFilter(e) {
+    setFilter(filterText);
+    setFilterText("");
+    e.stopPropagation();
+  }
 
   return (
     <div className="navBar">
-      <div className="logo" onClick={() => navigate("/")}>
-        <img src="/images/redditLogo.png" alt="logo" style={{backgroundColor: cookies.get("user") ? JSON.parse(cookies.get("user")).color: iconColor}} />
+      <div
+        className="logo"
+        onClick={() => {
+          setFilter("");
+          navigate("/");
+        }}
+      >
+        <img
+          src="/images/redditLogo.png"
+          alt="logo"
+          style={{
+            backgroundColor: cookies.get("user")
+              ? JSON.parse(cookies.get("user")).color
+              : iconColor,
+          }}
+        />
         <span>catit</span>
+        <div className="search">
+          <input
+            type="text"
+            value={filterText}
+            onClick={(e)=> {
+              e.stopPropagation();
+            }}
+            onChange={(e) => {
+              setFilterText(e.target.value);
+            }}
+          />
+          <button onClick={handleFilter}>Search</button>
+        </div>
       </div>
       <div className="loginButtons">
         {loggedIn ? (
