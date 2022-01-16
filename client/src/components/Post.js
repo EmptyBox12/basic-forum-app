@@ -16,7 +16,7 @@ export default function Post({ loggedIn, setDeletePost }) {
 
   useEffect(() => {
     (async () => {
-      let postResponse = await axios.get(`http://localhost:3001/posts/${slug}`);
+      let postResponse = await axios.get(`http://catit.herokuapp.com/posts/${slug}`);
       let post = postResponse.data;
       setPost(post);
     })();
@@ -45,7 +45,7 @@ export default function Post({ loggedIn, setDeletePost }) {
   async function handleCommentDelete(id) {
     try {
       let deleteResponse = await axios.delete(
-        `http://localhost:3001/comments/${id}`,
+        `http://catit.herokuapp.com/comments/${id}`,
         {
           headers: {
             authorization: `Bearer ${cookies.get("accessToken")}`,
@@ -67,7 +67,7 @@ export default function Post({ loggedIn, setDeletePost }) {
   async function makeComment() {
     try {
       const response = await axios.post(
-        `http://localhost:3001/comments/${slug}`,
+        `http://catit.herokuapp.com/comments/${slug}`,
         {
           content: commentArea,
         },
@@ -91,7 +91,7 @@ export default function Post({ loggedIn, setDeletePost }) {
   async function handleDelete() {
     try {
       let deleteResponse = await axios.delete(
-        `http://localhost:3001/posts/${slug}`,
+        `http://catit.herokuapp.com/posts/${slug}`,
         {
           headers: {
             authorization: `Bearer ${cookies.get("accessToken")}`,

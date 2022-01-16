@@ -17,7 +17,7 @@ export default function Navbar({
   async function handleLogout() {
     try {
       let responseData = await axios.post(
-        `http://localhost:3001/user/logout`,
+        `http://catit.herokuapp.com/user/logout`,
         {},
         {
           headers: {

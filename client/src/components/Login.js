@@ -23,7 +23,7 @@ export default function Login({ setLoggedIn, loggedIn, setIconColor }) {
     onSubmit: async (values) => {
       try {
         const { email, password } = values;
-        const loginData = await axios.post("http://localhost:3001/user/login", {
+        const loginData = await axios.post("http://catit.herokuapp.com/user/login", {
           email,
           password,
         });

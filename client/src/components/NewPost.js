@@ -24,7 +24,7 @@ export default function NewPost({ loggedIn, setPosts }) {
       try {
         const { title, content } = values;
         const response = await axios.post(
-          "http://localhost:3001/posts",
+          "http://catit.herokuapp.com/posts",
           {
             title,
             content,
