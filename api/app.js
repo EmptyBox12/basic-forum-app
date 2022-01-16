@@ -8,9 +8,9 @@ const commentRoute = require("./routes/commentRoute");
 const tokenRoute = require("./routes/tokenRoute");
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
-mongoose.connect('mongodb://localhost/forumAPI').then(()=>{
+mongoose.connect('mongodb+srv://ataberktumay:7P4TaLvmQab0Posn@catit.cd88y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority').then(()=>{
   console.log("mongoose connected")
 });
 //middlewares
