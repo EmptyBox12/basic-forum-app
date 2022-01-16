@@ -27,7 +27,7 @@ axios.interceptors.response.use(null, async (error) => {
   ) {
     try {
       const accessToken = await axios.post(
-        "http://catit.herokuapp.com/token/",
+        "https://catit.herokuapp.com/token/",
         {},
         {
           headers: {
@@ -55,7 +55,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        let response = await axios.get("http://catit.herokuapp.com/user/getUser", {
+        let response = await axios.get("https://catit.herokuapp.com/user/getUser", {
           headers: {
             authorization: `Bearer ${cookies.get("accessToken")}`,
           },

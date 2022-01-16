@@ -14,7 +14,7 @@ export default function Profile() {
   async function getUserPosts() {
     try {
       let usersData = await axios.get(
-        `http://catit.herokuapp.com/posts/userPosts/${slug}/?page=${page}`
+        `https://catit.herokuapp.com/posts/userPosts/${slug}/?page=${page}`
       );
       let allPosts = new Set([...userPosts, ...usersData.data.posts]);
       setUserPosts([...allPosts]);

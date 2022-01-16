@@ -25,7 +25,7 @@ export default function Register({ loggedIn, setIconColor }) {
       try {
         const { email, username, password, color } = values;
         const loginData = await axios.post(
-          "http://catit.herokuapp.com/user/register",
+          "https://catit.herokuapp.com/user/register",
           {
             email,
             username,

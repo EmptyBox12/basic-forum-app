@@ -15,11 +15,11 @@ export default function Main({ posts, setPosts, filter, setFilter }) {
       let postsData;
       if (filter == null) {
         postsData = await axios.get(
-          `http://catit.herokuapp.com/posts/?page=${page}&search=`
+          `https://catit.herokuapp.com/posts/?page=${page}&search=`
         );
       } else {
         postsData = await axios.get(
-          `http://catit.herokuapp.com/posts/?page=${page}&search=${filter}`
+          `https://catit.herokuapp.com/posts/?page=${page}&search=${filter}`
         );
       }
 
@@ -39,7 +39,7 @@ export default function Main({ posts, setPosts, filter, setFilter }) {
     (async () => {
       if (filter && filter != "") {
         const postsData = await axios.get(
-          `http://catit.herokuapp.com/posts/?page=1&search=${filter}`
+          `https://catit.herokuapp.com/posts/?page=1&search=${filter}`
         );
         if (JSON.stringify(postsData.data.posts) != JSON.stringify(posts)) {
           console.log(postsData.data.posts);
@@ -64,7 +64,7 @@ export default function Main({ posts, setPosts, filter, setFilter }) {
         }
       } else {
         try {
-          const postsData = await axios.get(`http://catit.herokuapp.com/posts/`);
+          const postsData = await axios.get(`https://catit.herokuapp.com/posts/`);
           setTotalPage(Math.ceil(postsData.data.totalPosts / 10));
           let currentPage = Math.ceil(posts.length / 10);
           setPage(currentPage + 1);
